@@ -1,6 +1,6 @@
-# API desenvolvida com Node.js
-Uma API desenvolvida com Node.js e Express, utilizando como banco de dados o MongoDB.  
-Para quem quiser testar a aplicação, ela está hospedada no [Heroku](https://nodejs-api-mongo.herokuapp.com/)  
+# API RESTful desenvolvida com Node.js
+API desenvolvida com Node.js e Express, utilizando como banco de dados o MongoDB.  
+Para quem quiser testar a aplicação, ela está hospedada no [Heroku](https://nodejs-apirestful.herokuapp.com/)  
 
 # Requisitos
 - Node.js
@@ -8,7 +8,7 @@ Para quem quiser testar a aplicação, ela está hospedada no [Heroku](https://n
 - NPM / Yarn
 
 # Instalação
-- Clone o repositório: `git clone https://github.com/kazordoon/nodejs-api-mongodb.git`
+- Clone o repositório: `git clone https://github.com/kazordoon/nodejs-api-restful-express.git`
 - No diretório do projeto, instale as dependências:
   - Com o NPM: `npm install`
   - Com o Yarn: `yarn install`
