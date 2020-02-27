@@ -16,10 +16,9 @@ module.exports = (app) => {
 
       return res.json({
         token: generateToken({ id: user.id }),
-      });
+      }).status(201);
     } catch (err) {
-      console.error(err);
-      return res.status(400).json({ error: 'Ocorreu um erro ao registrar o usuário, tente novamente' });
+      return res.status(400).json({ error: 'Não foi possível criar uma nova conta' });
     }
   };
 
@@ -36,14 +35,14 @@ module.exports = (app) => {
       }
 
       if (!await bcrypt.compare(senha, user.senha)) {
-        return res.status(400).json({ error: 'Senha incorreta' });
+        return res.status(401).json({ error: 'Falha na autenticação' });
       }
 
       return res.json({
         token: generateToken({ id: user.id }),
       });
     } catch (err) {
-      return res.status(400).json({ error: 'Erro na autenticação' });
+      return res.status(401).json({ error: 'Falha na autenticação' });
     }
   };
 
