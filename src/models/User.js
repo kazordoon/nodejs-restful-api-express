@@ -7,17 +7,17 @@ const UserSchema = new mongoose.Schema({
     required: true,
     index: true,
     unique: true,
-    lowercase: true
+    lowercase: true,
   },
   senha: {
     type: String,
     required: true,
-    select: false // Impede que a senha seja retornada ao usuário
-  }
+    select: false, // Impede que a senha seja retornada ao usuário
+  },
 }, { versionKey: false });
 
 // Criptografando a senha antes de salvá-la no banco de dados
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function hashPassword(next) {
   const hash = await bcrypt.hash(this.senha, 10);
   this.senha = hash;
 

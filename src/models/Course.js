@@ -5,24 +5,24 @@ const CourseSchema = new mongoose.Schema({
     type: String,
     required: true,
     index: true,
-    unique: true
+    unique: true,
   },
   descricao: {
     type: String,
-    required: true
+    required: true,
   },
   carga_horaria: {
     type: Number,
-    required: true
+    required: true,
   },
   total_aulas: {
     type: Number,
-    required: true
+    required: true,
   },
   ano: {
     type: Number,
-    required: true
-  }
+    required: true,
+  },
 }, { versionKey: false });
 
 const Course = mongoose.model('Curso', CourseSchema);
