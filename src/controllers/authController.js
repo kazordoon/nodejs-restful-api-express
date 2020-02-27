@@ -1,16 +1,10 @@
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const User = require('../models/User');
+module.exports = (app) => {
+  const { User } = app.models;
+  const { generateToken } = app.utils;
 
-function generateToken(params) {
-  return jwt.sign(params, process.env.SECRET_KEY, {
-    expiresIn: 86400,
-  });
-}
-
-module.exports = {
-  async register(req, res) {
+  const register = async (req, res) => {
     try {
       const { usuario } = req.body;
 
@@ -24,10 +18,12 @@ module.exports = {
         token: generateToken({ id: user.id }),
       });
     } catch (err) {
+      console.error(err);
       return res.status(400).json({ error: 'Ocorreu um erro ao registrar o usuário, tente novamente' });
     }
-  },
-  async authenticate(req, res) {
+  };
+
+  const authenticate = async (req, res) => {
     try {
       const { usuario, senha } = req.body;
 
@@ -49,5 +45,10 @@ module.exports = {
     } catch (err) {
       return res.status(400).json({ error: 'Erro na autenticação' });
     }
-  },
+  };
+
+  return {
+    register,
+    authenticate,
+  };
 };

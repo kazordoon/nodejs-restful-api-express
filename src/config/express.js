@@ -1,15 +1,23 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const consign = require('consign');
 
 const app = express();
-
-const courseRoutes = require('../routes/courseRoutes');
-const authRoutes = require('../routes/authRoutes');
 
 module.exports = () => {
   app.use(express.json());
   app.use(cors());
+
+  consign({ cwd: 'src' })
+    .then('models')
+    .then('utils')
+    .then('controllers')
+    .then('middlewares')
+    .then('routes')
+    .into(app);
+
+  const { courseRoutes, authRoutes } = app.routes;
 
   app.use(courseRoutes);
   app.use('/auth', authRoutes);

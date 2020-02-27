@@ -1,12 +1,13 @@
 const router = require('express').Router();
-const authMiddleware = require('../middlewares/auth');
 
-const cursoController = require('../controllers/courseController');
+module.exports = (app) => {
+  const { courseController } = app.controllers;
+  const { auth } = app.middlewares;
 
+  router.get('/', courseController.index);
+  router.post('/', auth, courseController.create);
+  router.delete('/:id', auth, courseController.destroy);
+  router.put('/:id', auth, courseController.update);
 
-router.get('/', cursoController.index);
-router.post('/', authMiddleware, cursoController.create);
-router.delete('/:id', authMiddleware, cursoController.delete);
-router.put('/:id', authMiddleware, cursoController.update);
-
-module.exports = router;
+  return router;
+};
