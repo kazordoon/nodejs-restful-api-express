@@ -26,14 +26,15 @@ module.exports = (app) => {
         return res.status(422).json(errors.array());
       }
 
-      if (await Course.findOne(req.body)) {
-        return res.status(409).json({ error: 'Este curso já existe' });
+      const { nome } = req.body;
+
+      if (await Course.findOne({ nome })) {
+        return res.status(409).json({ error: 'Já existe um curso com este nome' });
       }
 
       const course = await Course.create(req.body);
-      return res.json(course).status(201);
+      return res.status(201).json(course);
     } catch (err) {
-      console.error(err);
       return res.status(403).json({ error: 'Não foi possível criar um novo curso' });
     }
   };
@@ -47,16 +48,17 @@ module.exports = (app) => {
       }
 
       const { nome } = req.body;
+      const { id } = req.params;
+
+      if (!await Course.findById(id)) {
+        return res.status(404).json({ error: 'Este curso não existe' });
+      }
 
       if (await Course.findOne({ nome })) {
         return res.status(409).json({ error: 'Já existe um curso com este nome' });
       }
 
-      const course = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
-
-      if (!course) {
-        return res.status(404).json({ error: 'Este curso não existe' });
-      }
+      const course = await Course.findByIdAndUpdate(id, req.body, { new: true });
 
       return res.json(course);
     } catch (err) {
@@ -72,7 +74,16 @@ module.exports = (app) => {
         return res.status(422).json(errors.array());
       }
 
-      await Course.findByIdAndDelete(req.params.id);
+      const { id } = req.params;
+
+      const course = await Course.findById(id);
+
+      if (!course) {
+        return res.status(404).json({ error: 'Este curso não existe' });
+      }
+
+      course.remove();
+
       return res.sendStatus(204);
     } catch (err) {
       return res.status(403).json({ error: 'Não foi possível deletar este curso' });

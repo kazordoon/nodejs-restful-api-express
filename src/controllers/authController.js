@@ -21,9 +21,9 @@ module.exports = (app) => {
 
       const user = await User.create(req.body);
 
-      return res.json({
+      return res.status(201).json({
         token: generateToken({ id: user.id }),
-      }).status(201);
+      });
     } catch (err) {
       return res.status(400).json({ error: 'Não foi possível criar uma nova conta' });
     }
