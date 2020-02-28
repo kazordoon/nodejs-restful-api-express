@@ -1,8 +1,16 @@
+const { validationResult } = require('express-validator');
+
 module.exports = (app) => {
   const { Course } = app.models;
 
   const index = async (req, res) => {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json(errors.array());
+      }
+
       const courses = await Course.find({}, [], { sort: { nome: 1 } }).exec();
       return res.json(courses);
     } catch (err) {
@@ -12,6 +20,12 @@ module.exports = (app) => {
 
   const create = async (req, res) => {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json(errors.array());
+      }
+
       if (await Course.findOne(req.body)) {
         return res.status(409).json({ error: 'Este curso já existe' });
       }
@@ -19,12 +33,19 @@ module.exports = (app) => {
       const course = await Course.create(req.body);
       return res.json(course).status(201);
     } catch (err) {
+      console.error(err);
       return res.status(403).json({ error: 'Não foi possível criar um novo curso' });
     }
   };
 
   const update = async (req, res) => {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json(errors.array());
+      }
+
       const { nome } = req.body;
 
       if (await Course.findOne({ nome })) {
@@ -45,6 +66,12 @@ module.exports = (app) => {
 
   const destroy = async (req, res) => {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json(errors.array());
+      }
+
       await Course.findByIdAndDelete(req.params.id);
       return res.sendStatus(204);
     } catch (err) {

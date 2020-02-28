@@ -14,6 +14,7 @@ module.exports = () => {
     .then('utils')
     .then('controllers')
     .then('middlewares')
+    .then('schemas')
     .then('routes')
     .into(app);
 

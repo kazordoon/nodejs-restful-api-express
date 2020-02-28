@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const { validationResult } = require('express-validator');
 
 module.exports = (app) => {
   const { User } = app.models;
@@ -6,6 +7,12 @@ module.exports = (app) => {
 
   const register = async (req, res) => {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json(errors.array());
+      }
+
       const { usuario } = req.body;
 
       if (await User.findOne({ usuario })) {
@@ -24,6 +31,12 @@ module.exports = (app) => {
 
   const authenticate = async (req, res) => {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json(errors.array());
+      }
+
       const { usuario, senha } = req.body;
 
       // Como no model User foi definida a propriedade "select" para o campo "senha"
