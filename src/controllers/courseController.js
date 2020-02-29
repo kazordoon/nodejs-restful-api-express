@@ -5,12 +5,6 @@ module.exports = (app) => {
 
   const index = async (req, res) => {
     try {
-      const errors = validationResult(req);
-
-      if (!errors.isEmpty()) {
-        return res.status(422).json(errors.array());
-      }
-
       const courses = await Course.find({}, [], { sort: { nome: 1 } }).exec();
       return res.json(courses);
     } catch (err) {
@@ -68,12 +62,6 @@ module.exports = (app) => {
 
   const destroy = async (req, res) => {
     try {
-      const errors = validationResult(req);
-
-      if (!errors.isEmpty()) {
-        return res.status(422).json(errors.array());
-      }
-
       const { id } = req.params;
 
       const course = await Course.findById(id);
