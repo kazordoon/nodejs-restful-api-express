@@ -7,6 +7,6 @@ module.exports = (url) => {
     useFindAndModify: false,
     useCreateIndex: true,
   })
-    .then(() => console.log('MongoDB conectado'))
-    .catch((err) => console.error(`Erro ao conectar-se ao MongoDB:\n ${err}`));
+    .then(() => console.log('MongoDB connected'))
+    .catch((err) => console.error(`Error connecting to MongoDB:\n ${err}`));
 };

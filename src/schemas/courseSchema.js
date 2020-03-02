@@ -2,75 +2,75 @@
 const { checkSchema } = require('express-validator');
 
 module.exports = (app) => {
-  const anoAtual = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
 
   const requiredSchema = checkSchema({
-    nome: {
+    name: {
       isLength: {
         options: { min: 5, max: 50 },
       },
-      errorMessage: 'O nome do curso deve possuir entre 5 e 50 carácteres',
+      errorMessage: 'Course name must be between 5 to 50 characters',
     },
-    descricao: {
+    description: {
       isLength: {
         options: { min: 15, max: 100 },
       },
-      errorMessage: 'A descrição do curso deve possuir entre 15 e 100 carácteres',
+      errorMessage: 'Course description must be 15 to 100 characters',
     },
-    carga_horaria: {
+    workload: {
       isInt: {
         options: { min: 1 },
       },
-      errorMessage: 'A carga horária do curso deve ter pelo menos 1 hora',
+      errorMessage: 'Course workload must be at least 1 hour',
     },
-    total_aulas: {
+    total_classes: {
       isInt: {
         options: { min: 1 },
       },
-      errorMessage: 'O curso deve ter pelo menos 1 aula',
+      errorMessage: 'Course must have at least 1 class',
     },
-    ano: {
+    year: {
       isInt: {
-        options: { min: 1970, max: anoAtual },
+        options: { min: 1970, max: currentYear },
       },
-      errorMessage: `O ano do curso deve estar entre 1970 e ${anoAtual}`,
+      errorMessage: `Course year must be between 1970 and ${currentYear}`,
     },
   });
 
   const optionalSchema = checkSchema({
-    nome: {
+    name: {
       isLength: {
         options: { min: 5, max: 50 },
       },
-      errorMessage: 'O nome do curso deve possuir entre 5 e 50 carácteres',
+      errorMessage: 'Course name must be between 5 to 50 characters',
       optional: true,
     },
-    descricao: {
+    description: {
       isLength: {
         options: { min: 15, max: 100 },
       },
-      errorMessage: 'A descrição do curso deve possuir entre 15 e 100 carácteres',
+      errorMessage: 'Course description must be 15 to 100 characters',
       optional: true,
     },
-    carga_horaria: {
+    workload: {
       isInt: {
         options: { min: 1 },
       },
-      errorMessage: 'A carga horária do curso deve ter pelo menos 1 hora',
+      errorMessage: 'Course workload must be at least 1 hour',
       optional: true,
     },
-    total_aulas: {
+    total_classes: {
       isInt: {
         options: { min: 1 },
       },
-      errorMessage: 'O curso deve ter pelo menos 1 aula',
+      errorMessage: 'Course must have at least 1 class',
       optional: true,
     },
-    ano: {
+    year: {
       isInt: {
-        options: { min: 1970, max: anoAtual },
+        options: { min: 1970, max: currentYear },
       },
-      errorMessage: `O ano do curso deve estar entre 1970 e ${anoAtual}`,
+      errorMessage: `Course year must be between 1970 and ${currentYear}`,
       optional: true,
     },
   });

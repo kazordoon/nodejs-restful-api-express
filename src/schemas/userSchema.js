@@ -1,18 +1,18 @@
 const { check } = require('express-validator');
 
 module.exports = (app) => {
-  const usuario = check('usuario')
+  const username = check('username')
     .isLength({ min: 3, max: 20 })
-    .withMessage('O nome de usuário deve possuir entre 3 e 20 carácteres')
+    .withMessage('Username must be between 3 and 20 characters')
     .matches(/^[A-Za-z0-9]+$/)
-    .withMessage('O nome de usuário deve possuir apenas letras e números');
+    .withMessage('Username must contain only letters and numbers');
 
-  const senha = check('senha')
+  const password = check('password')
     .isLength({ min: 8, max: 50 })
-    .withMessage('A senha deve possuir entre 8 e 50 carácteres');
+    .withMessage('User password must be between 8 to 50 characters');
 
   return [
-    usuario,
-    senha,
+    username,
+    password,
   ];
 };

@@ -2,31 +2,31 @@ const mongoose = require('mongoose');
 
 module.exports = (app) => {
   const CourseSchema = new mongoose.Schema({
-    nome: {
+    name: {
       type: String,
       required: true,
       index: true,
       unique: true,
     },
-    descricao: {
+    description: {
       type: String,
       required: true,
     },
-    carga_horaria: {
+    workload: {
       type: Number,
       required: true,
     },
-    total_aulas: {
+    total_classes: {
       type: Number,
       required: true,
     },
-    ano: {
+    year: {
       type: Number,
       required: true,
     },
   }, { versionKey: false });
 
-  const Course = mongoose.model('Curso', CourseSchema);
+  const Course = mongoose.model('Course', CourseSchema);
 
   return Course;
 };

@@ -3,29 +3,28 @@ const bcrypt = require('bcryptjs');
 
 module.exports = (app) => {
   const UserSchema = new mongoose.Schema({
-    usuario: {
+    username: {
       type: String,
       required: true,
       index: true,
       unique: true,
       lowercase: true,
     },
-    senha: {
+    password: {
       type: String,
       required: true,
-      select: false, // Impede que a senha seja retornada ao usuário
+      select: false, // To not return the password
     },
   }, { versionKey: false });
 
-  // Criptografando a senha antes de salvá-la no banco de dados
   UserSchema.pre('save', async function hashPassword(next) {
-    const hash = await bcrypt.hash(this.senha, 10);
-    this.senha = hash;
+    const hashedPassword = await bcrypt.hash(this.password, 10);
+    this.password = hashedPassword;
 
     next();
   });
 
-  const User = mongoose.model('Usuario', UserSchema);
+  const User = mongoose.model('User', UserSchema);
 
   return User;
 };
