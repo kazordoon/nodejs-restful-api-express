@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = (app) => {
+  const { User } = app.models;
+
   // eslint-disable-next-line consistent-return
   const auth = (req, res, next) => {
     // Authorization header syntax:
@@ -23,9 +25,16 @@ module.exports = (app) => {
       return res.status(401).json({ error: 'Malformatted token' });
     }
 
-    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
       if (err) {
         return res.status(401).json({ error: 'Invalid token' });
+      }
+
+      const { id } = decoded;
+      req.userId = id;
+
+      if (!await User.findById(id)) {
+        return res.status(401).json({ error: 'Authentication failed' });
       }
 
       return next();
