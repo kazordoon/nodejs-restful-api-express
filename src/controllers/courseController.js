@@ -18,6 +18,28 @@ module.exports = (app) => {
     }
   };
 
+  const getOne = async (req, res) => {
+    try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json(errors.array());
+      }
+
+      const { id } = req.params;
+
+      const course = await Course.findById(id);
+
+      if (!course) {
+        return res.status(404).json({ error: "This course doesn't exist" });
+      }
+
+      return res.json(course);
+    } catch (err) {
+      return res.status(500).json({ error: "Couldn't list this course" });
+    }
+  };
+
   const create = async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -92,6 +114,7 @@ module.exports = (app) => {
 
   return {
     index,
+    getOne,
     create,
     update,
     destroy,

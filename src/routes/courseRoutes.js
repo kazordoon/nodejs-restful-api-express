@@ -6,6 +6,7 @@ module.exports = (app) => {
   const { requiredSchema, optionalSchema } = app.schemas.courseSchema;
 
   router.get('/', courseController.index);
+  router.get('/:id', courseController.getOne);
   router.post('/', requiredSchema, auth, courseController.create);
   router.delete('/:id', auth, courseController.destroy);
   router.put('/:id', optionalSchema, auth, courseController.update);
