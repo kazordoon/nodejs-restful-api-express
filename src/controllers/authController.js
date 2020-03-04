@@ -29,7 +29,7 @@ module.exports = (app) => {
     }
   };
 
-  const authenticate = async (req, res) => {
+  const login = async (req, res) => {
     try {
       const errors = validationResult(req);
 
@@ -60,6 +60,6 @@ module.exports = (app) => {
 
   return {
     register,
-    authenticate,
+    login,
   };
 };

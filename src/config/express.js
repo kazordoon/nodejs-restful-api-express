@@ -20,7 +20,7 @@ module.exports = () => {
 
   const { courseRoutes, authRoutes } = app.routes;
 
-  app.use(courseRoutes);
+  app.use('/courses', courseRoutes);
   app.use('/auth', authRoutes);
 
   const PORT = process.env.PORT || 3000;

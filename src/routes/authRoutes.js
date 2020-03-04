@@ -5,7 +5,7 @@ module.exports = (app) => {
   const { userSchema: checkSchema } = app.schemas;
 
   router.post('/register', checkSchema, authController.register);
-  router.post('/authenticate', checkSchema, authController.authenticate);
+  router.post('/login', checkSchema, authController.login);
 
   return router;
 };
