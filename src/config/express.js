@@ -23,6 +23,11 @@ module.exports = () => {
   app.use('/courses', courseRoutes);
   app.use('/auth', authRoutes);
 
+  const { notFound, handleErrors } = app.middlewares.errors;
+
+  app.use(notFound);
+  app.use(handleErrors);
+
   const PORT = process.env.PORT || 3000;
   app.set('PORT', PORT);
 
