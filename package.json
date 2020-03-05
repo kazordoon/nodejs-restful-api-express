@@ -1,9 +1,9 @@
 {
-  "name": "nodejs-api-mongodb",
-  "version": "2.0.0",
-  "description": "API",
-  "main": "server.js",
-  "repository": "https://github.com/kazordoon/nodejs-api-mongodb.git",
+  "name": "nodejs-restful-api-express",
+  "version": "4.0.0",
+  "description": "RESTful API made with Node.js where a registered user can list, create, update or delete courses that are stored in a database.",
+  "main": "src/server.js",
+  "repository": "https://github.com/kazordoon/nodejs-restful-api-express",
   "author": "Felipe Barros",
   "license": "MIT",
   "scripts": {
@@ -11,16 +11,16 @@
     "start": "node ."
   },
   "devDependencies": {
-    "nodemon": "^2.0.1"
+    "nodemon": "^2.0.1",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "consign": "^0.1.6",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",

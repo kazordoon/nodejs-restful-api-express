@@ -1,7 +1,7 @@
-const app = require('./src/config/express')();
+const app = require('./config/express')();
 
 // Database connection
-require('./src/config/database')(process.env.MONGO_URL);
+require('./config/database')(process.env.MONGO_URL);
 
 app.listen(app.get('PORT'), () => {
   console.log(`Server running on *:${app.get('PORT')}`);
