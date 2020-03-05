@@ -9,7 +9,7 @@ module.exports = (app) => {
   router.get('/:id', courseController.getOne);
   router.post('/', requiredSchema, auth, courseController.create);
   router.delete('/:id', auth, courseController.destroy);
-  router.put('/:id', optionalSchema, auth, courseController.update);
+  router.patch('/:id', optionalSchema, auth, courseController.update);
 
   return router;
 };
