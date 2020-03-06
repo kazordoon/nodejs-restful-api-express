@@ -84,6 +84,10 @@ You need to put the token on the authorization header.
 	- Minimum: 1970
 	- Maximum: <current_year>
 
+## Examples
+
+See the [EXAMPLES.md](EXAMPLES.md).
+
 ## Built With
 
 * [Node.js](https://nodejs.org) - JavaScript runtime environment that executes JavaScript code server-side
