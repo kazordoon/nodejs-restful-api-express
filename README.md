@@ -98,7 +98,6 @@ See the [EXAMPLES.md](EXAMPLES.md).
 * [cors](https://github.com/expressjs/cors) Node.js CORS middleware
 * [express-validator](https://express-validator.github.io/docs/) - Data input validator
 * [bcryptjs](https://github.com/dcodeIO/bcrypt.js) - A library to help you hash passwords
-* [dotenv](https://github.com/motdotla/dotenv) - Load environment variables into .env file
 * [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) - An implementation of JSON Web Tokens
 
 ## Versioning
