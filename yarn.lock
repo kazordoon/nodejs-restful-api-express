@@ -593,7 +593,7 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-config-airbnb-base@^14.0.0:
+eslint-config-airbnb-base@^14.1.0:
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/eslint-config-airbnb-base/-/eslint-config-airbnb-base-14.1.0.tgz#2ba4592dd6843258221d9bff2b6831bd77c874e4"
   integrity sha512-+XCcfGyCnbzOnktDVhwsCAx+9DmrzEmuwxyHUJpw+kqBVT744OUBrB09khgFKlK1lshVww6qXGsYPZpavoNjJw==
@@ -618,7 +618,7 @@ eslint-module-utils@^2.4.1:
     debug "^2.6.9"
     pkg-dir "^2.0.0"
 
-eslint-plugin-import@^2.18.2:
+eslint-plugin-import@^2.20.1:
   version "2.20.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.20.1.tgz#802423196dcb11d9ce8435a5fc02a6d3b46939b3"
   integrity sha512-qQHgFOTjguR+LnYRoToeZWT62XM55MBVXObHM6SKFd1VzDcX/vqT1kAz8ssqigh5eMj8qXcRoXXGZpPP6RfdCw==
@@ -656,7 +656,7 @@ eslint-visitor-keys@^1.1.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.1.0.tgz#e2a82cea84ff246ad6fb57f9bde5b46621459ec2"
   integrity sha512-8y9YjtM1JBJU/A9Kc+SbaOV4y29sSWckBwMHa+FGtVj5gN/sbnKDf6xJUl+8g7FAij9LVaP8C24DUiH/f/2Z9A==
 
-eslint@^6.1.0:
+eslint@^6.8.0:
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.8.0.tgz#62262d6729739f9275723824302fb227c8c93ffb"
   integrity sha512-K+Iayyo2LtyYhDSYwz5D5QdWw0hCacNzyq1Y821Xna2xSJj7cijoLLYmLxTQgcgZ9mC61nryMy9S7GRbYpI5Ig==
@@ -1535,7 +1535,7 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-nodemon@^2.0.1:
+nodemon@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-2.0.2.tgz#9c7efeaaf9b8259295a97e5d4585ba8f0cbe50b0"
   integrity sha512-GWhYPMfde2+M0FsHnggIHXTqPDHXia32HRhh6H0d75Mt9FKUoCBvumNHr7LdrpPBTKxsWmIEOjoN+P4IU6Hcaw==
