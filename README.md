@@ -99,6 +99,7 @@ See the [EXAMPLES.md](EXAMPLES.md).
 * [express-validator](https://express-validator.github.io/docs/) - Data input validator
 * [bcryptjs](https://github.com/dcodeIO/bcrypt.js) - A library to help you hash passwords
 * [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) - An implementation of JSON Web Tokens
+* [ioredis](https://github.com/luin/ioredis) - A robust, performance-focused and full-featured Redis client for Node.js
 
 ## Versioning
 
