@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const cache = require('../redis');
 
 module.exports = (app) => {
   const { Course } = app.models;
@@ -28,11 +29,20 @@ module.exports = (app) => {
 
       const { id } = req.params;
 
+      const isTheCourseInCache = Boolean(await cache.get(`course:${id}`));
+      if (isTheCourseInCache) {
+        let courseInCache = await cache.get(`course:${id}`);
+        courseInCache = JSON.parse(courseInCache);
+        return res.json(courseInCache);
+      }
+
       const course = await Course.findById(id);
 
       if (!course) {
         return res.status(404).json({ error: "This course doesn't exist" });
       }
+
+      await cache.set(`course:${id}`, JSON.stringify(course));
 
       return res.json(course);
     } catch (err) {
