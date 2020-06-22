@@ -9,6 +9,7 @@ RESTful API made with Node.js where a registered user can list, create, update o
 ### Prerequisites
 
 - MongoDB
+- Redis
 - Node.js
 - NPM / Yarn
 
