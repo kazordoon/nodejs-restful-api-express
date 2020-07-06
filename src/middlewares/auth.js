@@ -25,7 +25,8 @@ module.exports = (app) => {
       return res.status(401).json({ error: 'Malformatted token' });
     }
 
-    jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
+    console.log(process.env.JWT_KEY);
+    jwt.verify(token, process.env.JWT_KEY, async (err, decoded) => {
       if (err) {
         return res.status(401).json({ error: 'Invalid token' });
       }
