@@ -60,7 +60,8 @@ module.exports = (app) => {
 
       const { name } = req.body;
 
-      if (await Course.findOne({ name })) {
+      const courseAlreadyExists = await Course.findOne({ name });
+      if (courseAlreadyExists) {
         return res.status(409).json({ error: 'There is already a course with that name' });
       }
 
@@ -82,11 +83,13 @@ module.exports = (app) => {
       const { name } = req.body;
       const { id } = req.params;
 
-      if (!await Course.findById(id)) {
+      const courseNotFound = !(await Course.findById(id));
+      if (courseNotFound) {
         return res.status(404).json({ error: "This course doesn't exist" });
       }
 
-      if (await Course.findOne({ name })) {
+      const invalidNameForTheCourse = await Course.findOne({ name });
+      if (invalidNameForTheCourse) {
         return res.status(409).json({ error: 'There is already a course with that name' });
       }
 

@@ -15,13 +15,15 @@ module.exports = (app) => {
 
     const parts = authHeader.split(' ');
 
-    if (parts.length !== 2) {
+    const invalidAuthorizationHeader = parts.length !== 2;
+    if (invalidAuthorizationHeader) {
       return res.status(401).json({ error: 'Token error' });
     }
 
     const [scheme, token] = parts;
 
-    if (scheme.toLowerCase() !== 'bearer') {
+    const invalidScheme = scheme.toLowerCase() !== 'bearer';
+    if (invalidScheme) {
       return res.status(401).json({ error: 'Malformatted token' });
     }
 
@@ -33,7 +35,8 @@ module.exports = (app) => {
       const { id } = decoded;
       req.userId = id;
 
-      if (!await User.findById(id)) {
+      const userNotFound = !await User.findById(id);
+      if (userNotFound) {
         return res.status(401).json({ error: 'Authentication failed' });
       }
 
