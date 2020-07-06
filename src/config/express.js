@@ -7,7 +7,9 @@ const app = express();
 
 module.exports = () => {
   app.use(express.json());
-  app.use(cors());
+  app.use(cors({
+    origin: process.env.CORS_ORIGIN,
+  }));
 
   consign({ cwd: 'src' })
     .then('models')
