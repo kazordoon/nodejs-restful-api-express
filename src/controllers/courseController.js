@@ -118,6 +118,7 @@ module.exports = (app) => {
       }
 
       course.remove();
+      await cache.del(`course:${id}`);
 
       return res.sendStatus(204);
     } catch (err) {
