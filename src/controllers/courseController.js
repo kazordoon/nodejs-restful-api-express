@@ -6,14 +6,27 @@ module.exports = (app) => {
 
   const index = async (req, res) => {
     try {
+      const { page = 1, limit = 10 } = req.query;
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
         return res.status(422).json(errors.array());
       }
 
-      const courses = await Course.find({}, [], { sort: { name: 1 } }).exec();
-      return res.json(courses);
+      const courses = await Course
+        .find({}, [], { sort: { name: 1 } })
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
+
+      const courseCount = await Course.countDocuments();
+      const totalPages = Math.ceil(courseCount / limit);
+
+      return res.json({
+        courses,
+        total_pages: totalPages,
+        current_page: page,
+      });
     } catch (err) {
       return res.status(500).json({ error: "Couldn't list all courses" });
     }
