@@ -1,6 +1,6 @@
 {
   "name": "nodejs-restful-api-express",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "RESTful API made with Node.js where a registered user can list, create, update or delete courses that are stored in a database.",
   "main": "src/server.js",
   "repository": "https://github.com/kazordoon/nodejs-restful-api-express",
