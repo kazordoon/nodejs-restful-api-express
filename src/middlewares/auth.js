@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
+const { promisify } = require('util');
 
 module.exports = (app) => {
   const { User } = app.models;
 
-  // eslint-disable-next-line consistent-return
-  const auth = (req, res, next) => {
+  const auth = async (req, res, next) => {
     // Authorization header syntax:
     // Authorization: Bearer <token>
     const authHeader = req.headers.authorization;
@@ -27,21 +27,21 @@ module.exports = (app) => {
       return res.status(401).json({ error: 'Malformatted token' });
     }
 
-    jwt.verify(token, process.env.JWT_KEY, async (err, decoded) => {
-      if (err) {
-        return res.status(401).json({ error: 'Invalid token' });
-      }
+    try {
+      const decoded = await promisify(jwt.verify)(token, process.env.JWT_KEY);
 
       const { id } = decoded;
       req.userId = id;
 
-      const userNotFound = !await User.findById(id);
+      const userNotFound = !(await User.findById(id));
       if (userNotFound) {
         return res.status(401).json({ error: 'Authentication failed' });
       }
 
       return next();
-    });
+    } catch (err) {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
   };
 
   return auth;
