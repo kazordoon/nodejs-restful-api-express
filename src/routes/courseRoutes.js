@@ -1,15 +1,15 @@
 const router = require('express').Router();
 
 module.exports = (app) => {
-  const { courseController } = app.controllers;
+  const { coursesController } = app.controllers;
   const { auth } = app.middlewares;
   const { requiredSchema, optionalSchema } = app.schemas.courseSchema;
 
-  router.get('/', courseController.index);
-  router.get('/:id', courseController.getOne);
-  router.post('/', requiredSchema, auth, courseController.create);
-  router.delete('/:id', auth, courseController.destroy);
-  router.patch('/:id', optionalSchema, auth, courseController.update);
+  router.get('/', coursesController.index);
+  router.get('/:id', coursesController.getOne);
+  router.post('/', requiredSchema, auth, coursesController.create);
+  router.delete('/:id', auth, coursesController.destroy);
+  router.patch('/:id', optionalSchema, auth, coursesController.update);
 
   return router;
 };
