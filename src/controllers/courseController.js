@@ -14,7 +14,7 @@ module.exports = (app) => {
       }
 
       const courses = await Course
-        .find({}, [], { sort: { name: 1 } })
+        .find({}, [], { sort: { year: -1 } })
         .limit(limit * 1)
         .skip((page - 1) * limit)
         .exec();
