@@ -117,7 +117,7 @@ module.exports = (app) => {
         return res.status(404).json({ error: "This course doesn't exist" });
       }
 
-      course.remove();
+      await course.remove();
       await cache.del(`course:${id}`);
 
       return res.sendStatus(204);
