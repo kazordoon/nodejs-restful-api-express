@@ -3,6 +3,9 @@ const cache = require('../redis');
 
 module.exports = (app) => {
   const { Course } = app.models;
+  const { JsonSpec, getNotNullProperties } = app.utils;
+
+  const resourceType = 'courses';
 
   const index = async (req, res) => {
     try {
@@ -13,20 +16,30 @@ module.exports = (app) => {
         return res.status(422).json(errors.array());
       }
 
-      const courses = await Course
-        .find({}, [], { sort: { year: -1 } })
-        .limit(limit * 1)
-        .skip((page - 1) * limit)
+      const numericPage = Number(page);
+      const numericLimit = Number(limit);
+
+      const courses = await Course.find({}, [], { sort: { year: -1 } })
+        .limit(numericLimit * 1)
+        .skip((numericPage - 1) * numericLimit)
         .exec();
 
       const courseCount = await Course.countDocuments();
-      const totalPages = Math.ceil(courseCount / limit);
+      const totalPages = Math.ceil(courseCount / numericLimit);
 
-      return res.json({
-        courses,
-        total_pages: totalPages,
-        current_page: page,
-      });
+      const pageInfo = {
+        path: '/courses',
+        current: numericPage,
+        total: totalPages,
+      };
+      const mappedCourses = courses.map((course) => course._doc);
+      const response = JsonSpec.convertMany(
+        resourceType,
+        mappedCourses,
+        pageInfo,
+      );
+
+      return res.json(response);
     } catch (err) {
       return res.status(500).json({ error: "Couldn't list all courses" });
     }
@@ -42,11 +55,18 @@ module.exports = (app) => {
 
       const { id } = req.params;
 
+      const pagePath = `/courses/${id}`;
+
       const isTheCourseInCache = Boolean(await cache.get(`course:${id}`));
       if (isTheCourseInCache) {
-        let courseInCache = await cache.get(`course:${id}`);
-        courseInCache = JSON.parse(courseInCache);
-        return res.json(courseInCache);
+        const courseInCache = JSON.parse(await cache.get(`course:${id}`));
+
+        const response = JsonSpec.convertOne(
+          resourceType,
+          courseInCache,
+          pagePath,
+        );
+        return res.json(response);
       }
 
       const course = await Course.findById(id);
@@ -57,7 +77,8 @@ module.exports = (app) => {
 
       await cache.set(`course:${id}`, JSON.stringify(course));
 
-      return res.json(course);
+      const response = JsonSpec.convertOne(resourceType, course._doc, pagePath);
+      return res.json(response);
     } catch (err) {
       return res.status(500).json({ error: "Couldn't list this course" });
     }
@@ -75,11 +96,16 @@ module.exports = (app) => {
 
       const courseAlreadyExists = await Course.findOne({ name });
       if (courseAlreadyExists) {
-        return res.status(409).json({ error: 'There is already a course with that name' });
+        return res
+          .status(409)
+          .json({ error: 'There is already a course with that name' });
       }
 
       const course = await Course.create(req.body);
-      return res.status(201).json(course);
+
+      const pagePath = `/courses/${course.id}`;
+      const response = JsonSpec.convertOne(resourceType, course._doc, pagePath);
+      return res.status(201).json(response);
     } catch (err) {
       return res.status(403).json({ error: "Couldn't create this course" });
     }
@@ -93,7 +119,13 @@ module.exports = (app) => {
         return res.status(422).json(errors.array());
       }
 
-      const { name } = req.body;
+      const {
+        name,
+        description,
+        workload,
+        total_classes: totalClasses,
+        year,
+      } = req.body;
       const { id } = req.params;
 
       const courseNotFound = !(await Course.findById(id));
@@ -103,13 +135,27 @@ module.exports = (app) => {
 
       const invalidNameForTheCourse = await Course.findOne({ name });
       if (invalidNameForTheCourse) {
-        return res.status(409).json({ error: 'There is already a course with that name' });
+        return res
+          .status(409)
+          .json({ error: 'There is already a course with that name' });
       }
 
-      const course = await Course.findByIdAndUpdate(id, req.body, { new: true });
+      await Course.findByIdAndUpdate(id, req.body, {
+        new: true,
+      });
       await cache.del(`course:${id}`);
 
-      return res.json(course);
+      const payload = {
+        name,
+        description,
+        workload,
+        total_classes: totalClasses,
+        year,
+      };
+      const notNullCourseFields = getNotNullProperties(payload);
+      const pagePath = `/courses/${id}`;
+      const response = JsonSpec.convertOne(resourceType, notNullCourseFields, pagePath);
+      return res.json(response);
     } catch (err) {
       return res.status(403).json({ error: "Couldn't update this course" });
     }
