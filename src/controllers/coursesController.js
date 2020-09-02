@@ -107,6 +107,7 @@ module.exports = (app) => {
       }
 
       const course = await Course.findByIdAndUpdate(id, req.body, { new: true });
+      await cache.del(`course:${id}`);
 
       return res.json(course);
     } catch (err) {
