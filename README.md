@@ -23,7 +23,7 @@ RESTful API made with Node.js where a registered user can list, create, update o
 
 ### Setting environment variables
 
-Rename the `.env.example` file to the`.env`, then you will need to set the variable values ​​according to your environment.
+Copy the `.env.example` file to the` .env`, then you will need to set the variable values into the `.env` file according to your environment.
 
 ### Running the server
 
