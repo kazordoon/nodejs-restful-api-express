@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = () => ({
   URL: process.env.MONGO_URL,
   options: {
     useNewUrlParser: true,
@@ -6,4 +6,4 @@ module.exports = {
     useFindAndModify: false,
     useCreateIndex: true,
   },
-};
+});

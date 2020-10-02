@@ -1,5 +1,5 @@
 const RedisStatic = require('ioredis');
-const redisConfig = require('../config/redis');
+const redisConfig = require('../config/redis')();
 
 class Redis {
   constructor() {
