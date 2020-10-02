@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 
 module.exports = (app) => {
   const { User } = app.models;
-  const { generateToken, Encrypter } = app.utils;
+  const { Token, Encrypter } = app.utils;
 
   const register = async (req, res) => {
     try {
@@ -22,8 +22,9 @@ module.exports = (app) => {
 
       const user = await User.create(req.body);
 
+      const token = Token.generate({ id: user.id });
       return res.status(201).json({
-        token: generateToken({ id: user.id }),
+        token,
       });
     } catch (err) {
       return res.status(400).json({ error: "Couldn't create a new account" });
@@ -54,8 +55,9 @@ module.exports = (app) => {
         return res.status(401).json({ error: 'Authentication failed' });
       }
 
+      const token = Token.generate({ id: user.id });
       return res.json({
-        token: generateToken({ id: user.id }),
+        token,
       });
     } catch (err) {
       return res.status(401).json({ error: 'Authentication failed' });
