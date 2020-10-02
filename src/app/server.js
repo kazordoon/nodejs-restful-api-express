@@ -1,4 +1,4 @@
-const app = require('./config/express');
+const app = require('./app');
 const { Cluster } = require('../utils');
 require('../database');
 

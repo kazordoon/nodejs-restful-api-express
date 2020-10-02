@@ -2,7 +2,7 @@
   "name": "nodejs-restful-api-express",
   "version": "5.0.0",
   "description": "RESTful API made with Node.js where a registered user can list, create, update or delete courses that are stored in a database.",
-  "main": "server.js",
+  "main": "app.js",
   "repository": "https://github.com/kazordoon/nodejs-restful-api-express",
   "author": "Felipe Barros",
   "license": "MIT",
