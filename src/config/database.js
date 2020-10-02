@@ -1,12 +1,9 @@
-const mongoose = require('mongoose');
-
-module.exports = (url) => {
-  mongoose.connect(url, {
+module.exports = {
+  URL: process.env.MONGO_URL,
+  options: {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
     useCreateIndex: true,
-  })
-    .then(() => console.log('MongoDB connected'))
-    .catch((err) => console.error(`Error connecting to MongoDB:\n ${err}`));
+  },
 };

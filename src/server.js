@@ -1,7 +1,6 @@
 const app = require('./config/express')();
 const Cluster = require('./utils/Cluster')();
-
-require('./config/database')(process.env.MONGO_URL);
+require('./database');
 
 const cluster = new Cluster();
 
