@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const { Token, Encrypter } = require('../../utils');
+const { TokenGenerator, Encrypter } = require('../../utils');
 
 module.exports = (app) => {
   const { User } = app.models;
@@ -21,7 +21,7 @@ module.exports = (app) => {
 
       const user = await User.create(req.body);
 
-      const token = Token.generate({ id: user.id });
+      const token = TokenGenerator.generate({ id: user.id });
       return res.status(201).json({
         token,
       });
@@ -54,7 +54,7 @@ module.exports = (app) => {
         return res.status(401).json({ error: 'Authentication failed' });
       }
 
-      const token = Token.generate({ id: user.id });
+      const token = TokenGenerator.generate({ id: user.id });
       return res.json({
         token,
       });

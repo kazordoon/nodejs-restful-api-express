@@ -2,6 +2,6 @@ module.exports = {
   Cluster: require('./Cluster'),
   Encrypter: require('./Encrypter'),
   JsonSpec: require('./JsonSpec'),
-  Token: require('./Token'),
+  TokenGenerator: require('./TokenGenerator'),
   getNotNullProperties: require('./getNotNullProperties'),
 };

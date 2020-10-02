@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-class Token {
+class TokenGenerator {
   static generate(payload) {
     return jwt.sign(payload, process.env.JWT_KEY, {
       expiresIn: '1d',
@@ -8,4 +8,4 @@ class Token {
   }
 }
 
-module.exports = Token;
+module.exports = TokenGenerator;
