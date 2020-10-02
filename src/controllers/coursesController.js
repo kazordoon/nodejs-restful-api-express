@@ -1,9 +1,9 @@
 const { validationResult } = require('express-validator');
-const cache = require('../redis');
 
 module.exports = (app) => {
   const { Course } = app.models;
   const { JsonSpec, getNotNullProperties } = app.utils;
+  console.log(app.redis);
 
   const resourceType = 'courses';
 
@@ -154,7 +154,11 @@ module.exports = (app) => {
       };
       const notNullCourseFields = getNotNullProperties(payload);
       const pagePath = `/courses/${id}`;
-      const response = JsonSpec.convertOne(resourceType, notNullCourseFields, pagePath);
+      const response = JsonSpec.convertOne(
+        resourceType,
+        notNullCourseFields,
+        pagePath,
+      );
       return res.json(response);
     } catch (err) {
       return res.status(403).json({ error: "Couldn't update this course" });

@@ -7,13 +7,16 @@ const app = express();
 
 module.exports = () => {
   app.use(express.json());
-  app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-  }));
+  app.use(
+    cors({
+      origin: process.env.CORS_ORIGIN,
+    }),
+  );
 
   consign({ cwd: 'src' })
     .then('models')
     .then('utils')
+    .then('redis')
     .then('controllers')
     .then('middlewares')
     .then('schemas')
