@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
+const { secretKey } = require('../config/token')();
 
 class TokenGenerator {
   static generate(payload) {
-    return jwt.sign(payload, process.env.JWT_KEY, {
+    return jwt.sign(payload, secretKey, {
       expiresIn: '1d',
     });
   }
