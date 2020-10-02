@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 
 module.exports = (app) => {
   const { User } = app.models;
-  const { generateToken } = app.utils;
+  const { generateToken, Encrypter } = app.utils;
 
   const register = async (req, res) => {
     try {
@@ -46,7 +46,7 @@ module.exports = (app) => {
         return res.status(400).json({ error: "This user doesn't exist" });
       }
 
-      const isThePasswordIncorrect = !(await bcrypt.compare(
+      const isThePasswordIncorrect = !(await Encrypter.compare(
         password,
         user.password,
       ));
