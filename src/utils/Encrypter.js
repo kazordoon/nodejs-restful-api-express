@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 
-module.exports = (app) => {
+module.exports = () => {
   class Encrypter {
     static async hash(value) {
       const hash = await bcrypt.hash(value, 10);

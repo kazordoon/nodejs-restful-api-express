@@ -3,7 +3,6 @@ const { validationResult } = require('express-validator');
 module.exports = (app) => {
   const { Course } = app.models;
   const { JsonSpec, getNotNullProperties } = app.utils;
-  console.log(app.redis);
 
   const resourceType = 'courses';
 

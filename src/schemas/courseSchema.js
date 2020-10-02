@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const { checkSchema } = require('express-validator');
 
-module.exports = (app) => {
+module.exports = () => {
   const currentYear = new Date().getFullYear();
 
   const requiredSchema = checkSchema({

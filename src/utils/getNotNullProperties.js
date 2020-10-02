@@ -1,4 +1,4 @@
-module.exports = (app) => {
+module.exports = () => {
   function getNotNullProperties(target) {
     const notNullProperties = Object.entries(target)
       .filter(([key, value]) => {
@@ -11,10 +11,13 @@ module.exports = (app) => {
       .map(([key, value]) => ({
         [key]: value,
       }))
-      .reduce((previous, current) => ({
-        ...previous,
-        ...current,
-      }), {});
+      .reduce(
+        (previous, current) => ({
+          ...previous,
+          ...current,
+        }),
+        {},
+      );
 
     return notNullProperties;
   }

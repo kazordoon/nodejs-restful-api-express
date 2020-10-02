@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Encrypter = require('../utils/Encrypter')();
 
-module.exports = (app) => {
+module.exports = () => {
   const UserSchema = new mongoose.Schema(
     {
       username: {
