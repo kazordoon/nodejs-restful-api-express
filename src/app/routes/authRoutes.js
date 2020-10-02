@@ -1,8 +1,8 @@
 const router = require('express').Router();
+const { userSchema: checkSchema } = require('../../validators');
 
 module.exports = (app) => {
   const { authController } = app.controllers;
-  const { userSchema: checkSchema } = app.schemas;
 
   router.post('/register', checkSchema, authController.register);
   router.post('/login', checkSchema, authController.login);

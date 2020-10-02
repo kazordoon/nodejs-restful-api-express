@@ -1,6 +1,6 @@
-const app = require('./config/express')();
-const Cluster = require('./utils/Cluster')();
-require('./database');
+const app = require('./config/express');
+const { Cluster } = require('../utils');
+require('../database');
 
 const cluster = new Cluster();
 

@@ -1,8 +1,9 @@
 const { validationResult } = require('express-validator');
+const { JsonSpec, getNotNullProperties } = require('../../utils');
+const cache = require('../../redis');
 
 module.exports = (app) => {
   const { Course } = app.models;
-  const { JsonSpec, getNotNullProperties } = app.utils;
 
   const resourceType = 'courses';
 
