@@ -43,9 +43,12 @@ class App {
   }
 
   handleRouteErrors() {
-    const { notFound, handleErrors } = this.express.middlewares.errors;
+    const {
+      handleNotFoundPages,
+      handleErrors,
+    } = this.express.middlewares.errors;
 
-    this.express.use(notFound);
+    this.express.use(handleNotFoundPages);
     this.express.use(handleErrors);
   }
 }
