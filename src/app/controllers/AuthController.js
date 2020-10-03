@@ -3,13 +3,12 @@ const { TokenGenerator, Encrypter } = require('../../utils');
 
 module.exports = () => {
   class AuthController {
-    constructor(userModel) {
-      this.userModel = userModel;
+    constructor(userContext) {
+      this.userContext = userContext;
     }
 
     async register(req, res) {
       try {
-        console.log(this);
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -18,19 +17,18 @@ module.exports = () => {
 
         const { username } = req.body;
 
-        const userAlreadyExists = await this.userModel.findOne({ username });
+        const [userAlreadyExists] = await this.userContext.find({ username });
         if (userAlreadyExists) {
           return res.status(409).json({ error: 'This user already exists' });
         }
 
-        const user = await this.userModel.create(req.body);
+        const user = await this.userContext.create(req.body);
 
         const token = TokenGenerator.generate({ id: user.id });
         return res.status(201).json({
           token,
         });
       } catch (err) {
-        console.error(err);
         return res.status(400).json({ error: "Couldn't create a new account" });
       }
     }
@@ -45,9 +43,7 @@ module.exports = () => {
 
         const { username, password } = req.body;
 
-        const user = await this.userModel
-          .findOne({ username })
-          .select('+password');
+        const [user] = await this.userContext.find({ username });
 
         if (!user) {
           return res.status(400).json({ error: "This user doesn't exist" });

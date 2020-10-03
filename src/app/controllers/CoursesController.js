@@ -4,8 +4,8 @@ const cache = require('../../redis');
 
 module.exports = () => {
   class CoursesController {
-    constructor(courseModel) {
-      this.courseModel = courseModel;
+    constructor(courseContext) {
+      this.courseContext = courseContext;
       this.resourceType = 'courses';
     }
 
@@ -20,14 +20,14 @@ module.exports = () => {
 
         const numericPage = Number(page);
         const numericLimit = Number(limit);
+        const pagesToSkip = (numericPage - 1) * numericLimit;
 
-        const courses = await this.courseModel
-          .find({}, [], { sort: { year: -1 } })
-          .limit(numericLimit * 1)
-          .skip((numericPage - 1) * numericLimit)
-          .exec();
+        const courses = await this.courseContext.find(
+          {},
+          { skip: pagesToSkip, limit: numericLimit },
+        );
 
-        const courseCount = await this.courseModel.countDocuments();
+        const courseCount = await this.courseContext.countDocuments();
         const totalPages = Math.ceil(courseCount / numericLimit);
 
         const pageInfo = {
@@ -44,7 +44,6 @@ module.exports = () => {
 
         return res.json(response);
       } catch (err) {
-        console.log(err);
         return res.status(500).json({ error: "Couldn't list all courses" });
       }
     }
@@ -73,7 +72,7 @@ module.exports = () => {
           return res.json(response);
         }
 
-        const course = await this.courseModel.findById(id);
+        const course = await this.courseContext.findById(id);
 
         if (!course) {
           return res.status(404).json({ error: "This course doesn't exist" });
@@ -102,14 +101,14 @@ module.exports = () => {
 
         const { name } = req.body;
 
-        const courseAlreadyExists = await this.courseModel.findOne({ name });
+        const [courseAlreadyExists] = await this.courseContext.find({ name });
         if (courseAlreadyExists) {
           return res
             .status(409)
             .json({ error: 'There is already a course with that name' });
         }
 
-        const course = await this.courseModel.create(req.body);
+        const course = await this.courseContext.create(req.body);
 
         const pagePath = `/courses/${course.id}`;
         const response = JsonSpec.convertOne(
@@ -140,24 +139,19 @@ module.exports = () => {
         } = req.body;
         const { id } = req.params;
 
-        const courseNotFound = !(await this.courseModel.findById(id));
+        const courseNotFound = !(await this.courseContext.findById(id));
         if (courseNotFound) {
           return res.status(404).json({ error: "This course doesn't exist" });
         }
 
-        const invalidNameForTheCourse = await this.courseModel.findOne({
+        const [courseNameAlreadyInUse] = await this.courseContext.find({
           name,
         });
-        if (invalidNameForTheCourse) {
+        if (courseNameAlreadyInUse) {
           return res
             .status(409)
             .json({ error: 'There is already a course with that name' });
         }
-
-        await this.courseModel.findByIdAndUpdate(id, req.body, {
-          new: true,
-        });
-        await cache.del(`course:${id}`);
 
         const payload = {
           name,
@@ -166,6 +160,10 @@ module.exports = () => {
           total_classes: totalClasses,
           year,
         };
+
+        await this.courseContext.update(id, payload);
+        await cache.del(`course:${id}`);
+
         const notNullCourseFields = getNotNullProperties(payload);
         const pagePath = `/courses/${id}`;
         const response = JsonSpec.convertOne(
@@ -189,7 +187,7 @@ module.exports = () => {
 
         const { id } = req.params;
 
-        const course = await this.courseModel.findById(id);
+        const course = await this.courseContext.findById(id);
 
         if (!course) {
           return res.status(404).json({ error: "This course doesn't exist" });

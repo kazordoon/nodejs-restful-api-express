@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
+const { User } = require('../../database/strategies/mongodb/schemas');
 
-module.exports = (app) => {
-  const { User } = app.models;
-
+module.exports = () => {
   const auth = async (req, res, next) => {
     // Authorization header syntax:
     // Authorization: Bearer <token>

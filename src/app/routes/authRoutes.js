@@ -1,17 +1,18 @@
-const router = require('express').Router();
+const routes = require('express').Router();
 const { userSchema: checkSchema } = require('../../validators');
 
-module.exports = (app) => {
+module.exports = async (app) => {
   const { AuthControllerComposer } = app.composers;
 
-  const authController = AuthControllerComposer.compose();
+  const authController = await AuthControllerComposer.compose();
 
-  router.post('/register', checkSchema, (req, res) => (
-    authController.register(req, res)
-  ));
-  router.post('/login', checkSchema, (req, res) => (
-    authController.login(req, res)
-  ));
+  routes.post('/register', checkSchema, (req, res) =>
+    authController.register(req, res),
+  );
 
-  return router;
+  routes.post('/login', checkSchema, (req, res) =>
+    authController.login(req, res),
+  );
+
+  app.use('/auth', routes);
 };

@@ -1,24 +1,24 @@
-const router = require('express').Router();
+const routes = require('express').Router();
 const { courseSchema } = require('../../validators');
 
-module.exports = (app) => {
+module.exports = async (app) => {
   const { auth } = app.middlewares;
   const { checkRequiredSchema, checkOptionalSchema } = courseSchema;
   const { CoursesControllerComposer } = app.composers;
 
-  const coursesController = CoursesControllerComposer.compose();
+  const coursesController = await CoursesControllerComposer.compose();
 
-  router.get('/', (req, res) => coursesController.index(req, res));
-  router.get('/:id', (req, res) => coursesController.show(req, res));
-  router.post('/', checkRequiredSchema, auth, (req, res) => (
-    coursesController.create(req, res)
-  ));
-  router.delete('/:id', auth, (req, res) => (
-    coursesController.destroy(req, res)
-  ));
-  router.patch('/:id', checkOptionalSchema, auth, (req, res) => (
-    coursesController.update(req, res)
-  ));
+  routes.get('/', (req, res) => coursesController.index(req, res));
+  routes.get('/:id', (req, res) => coursesController.show(req, res));
+  routes.post('/', checkRequiredSchema, auth, (req, res) =>
+    coursesController.create(req, res),
+  );
+  routes.delete('/:id', auth, (req, res) =>
+    coursesController.destroy(req, res),
+  );
+  routes.patch('/:id', checkOptionalSchema, auth, (req, res) =>
+    coursesController.update(req, res),
+  );
 
-  return router;
+  app.use('/courses', routes);
 };

@@ -2,25 +2,28 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const consign = require('consign');
+const setupRoutes = require('./routes');
 
 class App {
   constructor() {
     this.express = express();
 
+    this.load();
+  }
+
+  async load() {
     this.loadSettings();
     this.loadMiddlewares();
-    this.loadRoutes();
+    await this.loadRoutes();
     this.handleRouteErrors();
   }
 
   loadSettings() {
     consign({ cwd: 'src/app', verbose: false })
-      .then('models')
       .then('controllers')
       .then('composers')
       .then('middlewares')
       .then('schemas')
-      .then('routes')
       .into(this.express);
 
     const PORT = process.env.PORT || 3000;
@@ -36,11 +39,8 @@ class App {
     );
   }
 
-  loadRoutes() {
-    const { courseRoutes, authRoutes } = this.express.routes;
-
-    this.express.use('/courses', courseRoutes);
-    this.express.use('/auth', authRoutes);
+  async loadRoutes() {
+    await setupRoutes(this.express);
   }
 
   handleRouteErrors() {
@@ -53,7 +53,7 @@ class App {
     this.express.use(handleErrors);
   }
 
-  start() {
+  async start() {
     this.connection = this.express.listen(this.express.get('PORT'), () => {
       console.log(`Server running on *:${this.express.get('PORT')}`);
     });
