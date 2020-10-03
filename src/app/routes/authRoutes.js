@@ -2,10 +2,16 @@ const router = require('express').Router();
 const { userSchema: checkSchema } = require('../../validators');
 
 module.exports = (app) => {
-  const { authController } = app.controllers;
+  const { AuthControllerComposer } = app.composers;
 
-  router.post('/register', checkSchema, authController.register);
-  router.post('/login', checkSchema, authController.login);
+  const authController = AuthControllerComposer.compose();
+
+  router.post('/register', checkSchema, (req, res) => (
+    authController.register(req, res)
+  ));
+  router.post('/login', checkSchema, (req, res) => (
+    authController.login(req, res)
+  ));
 
   return router;
 };

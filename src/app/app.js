@@ -17,6 +17,7 @@ class App {
     consign({ cwd: 'src/app', verbose: false })
       .then('models')
       .then('controllers')
+      .then('composers')
       .then('middlewares')
       .then('schemas')
       .then('routes')
