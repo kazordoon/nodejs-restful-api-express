@@ -51,6 +51,18 @@ class App {
     this.express.use(handleNotFoundPages);
     this.express.use(handleErrors);
   }
+
+  start() {
+    this.connection = this.express.listen(this.express.get('PORT'), () => {
+      console.log(`Server running on *:${this.express.get('PORT')}`);
+    });
+  }
+
+  close() {
+    if (this.connection) {
+      this.connection.close();
+    }
+  }
 }
 
-module.exports = new App().express;
+module.exports = new App();
