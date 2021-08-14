@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
-const { User } = require('../../database/strategies/mongodb/schemas');
+const { User } = require('../../infra/strategies/mongodb/schemas');
 
 module.exports = () => {
   const auth = async (req, res, next) => {

@@ -1,6 +1,6 @@
 const app = require('./app');
 const { Cluster } = require('../utils');
-const MongoDB = require('../database/strategies/mongodb');
+const MongoDB = require('../infra/strategies/mongodb');
 
 const start = async () => {
   await MongoDB.connect();

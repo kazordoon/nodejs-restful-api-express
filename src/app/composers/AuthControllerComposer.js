@@ -1,6 +1,6 @@
-const Context = require('../../database/strategies/base/ContextStrategy');
-const MongoDB = require('../../database/strategies/mongodb');
-const { User } = require('../../database/strategies/mongodb/schemas');
+const Context = require('../../infra/strategies/base/ContextStrategy');
+const MongoDB = require('../../infra/strategies/mongodb');
+const { User } = require('../../infra/strategies/mongodb/schemas');
 
 module.exports = (app) => {
   const { AuthController } = app.controllers;

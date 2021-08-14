@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 const { JsonSpec, getNotNullProperties } = require('../../utils');
-const cache = require('../../redis');
+const cache = require('../../infra/redis');
 
 module.exports = () => {
   class CoursesController {

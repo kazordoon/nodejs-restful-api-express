@@ -1,6 +1,6 @@
-const Context = require('../../database/strategies/base/ContextStrategy');
-const MongoDB = require('../../database/strategies/mongodb');
-const { Course } = require('../../database/strategies/mongodb/schemas');
+const Context = require('../../infra/strategies/base/ContextStrategy');
+const MongoDB = require('../../infra/strategies/mongodb');
+const { Course } = require('../../infra/strategies/mongodb/schemas');
 
 module.exports = (app) => {
   const { CoursesController } = app.controllers;
