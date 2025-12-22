@@ -18,11 +18,9 @@ const UserSchema = new mongoose.Schema(
   { versionKey: false },
 );
 
-UserSchema.pre('save', async function hashPassword(next) {
+UserSchema.pre('save', async function hashPassword() {
   const hashedPassword = await Encrypter.hash(this.password);
   this.password = hashedPassword;
-
-  next();
 });
 
 const User = mongoose.model('User', UserSchema);
