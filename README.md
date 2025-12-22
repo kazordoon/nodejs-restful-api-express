@@ -44,12 +44,14 @@ Action | Path | Parameters | Body | Method | Returns
 List all courses | /courses | -- | -- | GET | All courses
 List one course | /courses/{id} | id | -- | GET | The course that has the same `id` as the one found in the `id` parameter
 Create a new course | /courses | - | A JSON with these [fields](#course-fields) | POST | The created course
-Update a existing course | /courses/{id} | id | A JSON with at least one of these [fields](#course-fields) | PATCH | The updated course
+Update an existing course | /courses/{id} | id | A JSON with at least one of these [fields](#course-fields) | PATCH | The updated course
 Delete a course | /courses/{id} | id | -- | DELETE | --
 
 ### How to use the token
 
 You need to put the token on the authorization header.
+
+`Authorization: Bearer <token>`
 
 ### Input data validation
 
