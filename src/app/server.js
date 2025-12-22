@@ -1,6 +1,5 @@
 const app = require('./app');
-const { Cluster } = require('../utils');
-const MongoDB = require('../database/strategies/mongodb');
+const MongoDB = require('../infra/strategies/mongodb');
 
 const start = async () => {
   await MongoDB.connect();
@@ -14,11 +13,4 @@ process.on('SIGINT', async () => {
   process.exit(0);
 });
 
-const cluster = new Cluster();
-
-if (cluster.isMaster) {
-  cluster.fork();
-  cluster.logger();
-} else {
-  start();
-}
+start();

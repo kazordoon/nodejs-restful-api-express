@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 const { JsonSpec, getNotNullProperties } = require('../../utils');
-const cache = require('../../redis');
+const cache = require('../../infra/redis');
 
 module.exports = () => {
   class CoursesController {
@@ -193,7 +193,7 @@ module.exports = () => {
           return res.status(404).json({ error: "This course doesn't exist" });
         }
 
-        await course.remove();
+        await course.deleteOne();
         await cache.del(`course:${id}`);
 
         return res.sendStatus(204);

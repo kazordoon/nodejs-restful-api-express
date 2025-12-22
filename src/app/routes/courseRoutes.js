@@ -10,15 +10,9 @@ module.exports = async (app) => {
 
   routes.get('/', (req, res) => coursesController.index(req, res));
   routes.get('/:id', (req, res) => coursesController.show(req, res));
-  routes.post('/', checkRequiredSchema, auth, (req, res) =>
-    coursesController.create(req, res),
-  );
-  routes.delete('/:id', auth, (req, res) =>
-    coursesController.destroy(req, res),
-  );
-  routes.patch('/:id', checkOptionalSchema, auth, (req, res) =>
-    coursesController.update(req, res),
-  );
+  routes.post('/', checkRequiredSchema, auth, (req, res) => coursesController.create(req, res));
+  routes.delete('/:id', auth, (req, res) => coursesController.destroy(req, res));
+  routes.patch('/:id', checkOptionalSchema, auth, (req, res) => coursesController.update(req, res));
 
   app.use('/courses', routes);
 };

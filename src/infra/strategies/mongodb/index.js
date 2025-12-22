@@ -18,7 +18,20 @@ class MongoDB extends Database {
       connection = mongoose.connection;
     }
 
+    MongoDB.logger(connection);
+
     return connection;
+  }
+
+  /**
+   *
+   */
+  static async logger(connection) {
+    connection.on('connected', () => {
+      console.log('MongoDB connected');
+    });
+
+    connection.on('error', console.error);
   }
 
   static async disconnect() {
